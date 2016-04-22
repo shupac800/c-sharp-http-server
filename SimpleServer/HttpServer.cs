@@ -45,14 +45,6 @@ namespace SimpleServer
 			string heading;
 			string message;
 
-			if (p.http_url.Equals ("/Test.png")) {
-				Stream fs = File.Open("../../Test.png",FileMode.Open);
-
-				p.writeSuccess("image/png");
-				fs.CopyTo (p.outputStream.BaseStream);
-				p.outputStream.BaseStream.Flush ();
-			}
-
 			p.writeSuccess();
 
 			Console.WriteLine("request: {0}", p.http_url);
@@ -60,6 +52,17 @@ namespace SimpleServer
 
 			p.outputStream.WriteLine("<html><body>");
 			p.outputStream.WriteLine("Current Time: " + DateTime.Now.ToString());
+
+			switch (p.http_url) {
+			case "/animals":
+				AnimalHandler animals = new AnimalHandler ();
+				animals.getAllAnimals ();
+				break;
+			case "/habitats":
+				break;
+			case "/employees":
+				break;
+			}
 
 
 			if (p.http_url.Equals ("/animals")) 
