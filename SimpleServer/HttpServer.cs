@@ -56,7 +56,7 @@ namespace SimpleServer
 			switch (p.http_url) {
 			case "/animals":
 				AnimalHandler animals = new AnimalHandler ();
-				animals.getAllAnimals ();
+          p.outputStream.WriteLine(animals.getAllAnimals());
 				break;
 			case "/habitats":
 				break;
@@ -65,19 +65,19 @@ namespace SimpleServer
 			}
 
 
-			if (p.http_url.Equals ("/animals")) 
-			{
-				heading = "You requested a list of animals";
-				message = "There are currently 57 animals in my Zoo";
+			//if (p.http_url.Equals ("/animals")) 
+			//{
+			//	heading = "You requested a list of animals";
+			//	message = "There are currently 57 animals in my Zoo";
 
-				p.outputStream.WriteLine("<h1>{0}</h1>", heading);
-				p.outputStream.WriteLine("<div>{0}</div>", message);
+			//	p.outputStream.WriteLine("<h1>{0}</h1>", heading);
+			//	p.outputStream.WriteLine("<div>{0}</div>", message);
 
-				p.outputStream.WriteLine("<form method=\"POST\" action=\"/animal\">");
-				p.outputStream.WriteLine("<input type=\"text\" name=\"animal-name\" placeholder=\"Enter a new animal name\">");
-				p.outputStream.WriteLine("<input type=\"submit\" value=\"Create Animal\">");
-				p.outputStream.WriteLine("</form>");
-			}
+			//	p.outputStream.WriteLine("<form method=\"POST\" action=\"/animal\">");
+			//	p.outputStream.WriteLine("<input type=\"text\" name=\"animal-name\" placeholder=\"Enter a new animal name\">");
+			//	p.outputStream.WriteLine("<input type=\"submit\" value=\"Create Animal\">");
+			//	p.outputStream.WriteLine("</form>");
+			//}
 
 			p.outputStream.WriteLine("</body></html>");
 		}
