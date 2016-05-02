@@ -43,42 +43,40 @@ namespace SimpleServer
 		public override void handleGETRequest (HttpProcessor p)
 		{
 			string heading;
-			string message;
+			string message = "";
 
 			p.writeSuccess();
 
 			Console.WriteLine("request: {0}", p.http_url);
 
 
-			p.outputStream.WriteLine("<html><body>");
+			p.outputStream.WriteLine("<html><head><title>Zoolandia</title></head><body>");
 			p.outputStream.WriteLine("Current Time: " + DateTime.Now.ToString());
 
-			switch (p.http_url) {
-			case "/animals":
-				AnimalHandler animals = new AnimalHandler ();
-          p.outputStream.WriteLine(animals.getAllAnimals());
+			string[] urlParams = p.http_url.Split ('/');
+			string type = urlParams [1].ToString ();
+
+			switch (type) {
+			case "animals":
+				Console.WriteLine ("Animal route");
+				if (urlParams.Length > 2) {
+					Console.WriteLine ("Getting a single animal");
+					AnimalHandler animals = new AnimalHandler ();
+					message = animals.getAnimal (urlParams[2]);
+				} else {
+					Console.WriteLine ("Getting all animals");
+					AnimalHandler animals = new AnimalHandler ();
+					message = animals.getAllAnimals ();
+				}
+
 				break;
-			case "/habitats":
+			case "habitats":
 				break;
-			case "/employees":
+			case "employees":
 				break;
 			}
-
-
-			//if (p.http_url.Equals ("/animals")) 
-			//{
-			//	heading = "You requested a list of animals";
-			//	message = "There are currently 57 animals in my Zoo";
-
-			//	p.outputStream.WriteLine("<h1>{0}</h1>", heading);
-			//	p.outputStream.WriteLine("<div>{0}</div>", message);
-
-			//	p.outputStream.WriteLine("<form method=\"POST\" action=\"/animal\">");
-			//	p.outputStream.WriteLine("<input type=\"text\" name=\"animal-name\" placeholder=\"Enter a new animal name\">");
-			//	p.outputStream.WriteLine("<input type=\"submit\" value=\"Create Animal\">");
-			//	p.outputStream.WriteLine("</form>");
-			//}
-
+				
+			p.outputStream.WriteLine(message);
 			p.outputStream.WriteLine("</body></html>");
 		}
 
