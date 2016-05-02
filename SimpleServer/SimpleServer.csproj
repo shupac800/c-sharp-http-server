@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Mono.Data.Sqlite" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -55,15 +56,6 @@
     <Compile Include="HttpServer.cs" />
     <Compile Include="HttpProcessor.cs" />
     <Compile Include="AnimalHandler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Zoolandia.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Zoolandia_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Zoolandia.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
