@@ -1,33 +1,31 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace SimpleServer
 {
-	public class AnimalHandler
-	{
-		public AnimalHandler ()
-		{
-		}
+    public class EmployeeHandler
+    {
+        public EmployeeHandler()
+        {
+        }
 
-		public string getAnimal(string IdAnimal) {
-			string response = "";
+        public string getEmployee(string IdEmployee)
+        {
+            string response = "";
 
-			string query = @"
-				SELECT 
-				  a.IdAnimal,
-				  a.Name, 
-				  h.Name HabitatName,
-				  ht.Name HabitatType,
-				  s.CommonName,
-				  s.ScientificName,
-                  s.Wiki
-				FROM Animal a
-				INNER JOIN Species s ON a.IdSpecies = s.IdSpecies
-				INNER JOIN Habitat h ON h.IdHabitat = a.IdHabitat
-				INNER JOIN HabitatType ht on ht.IdType = h.IdType
-				WHERE a.IdAnimal = 
-				" + IdAnimal;
+            string query = @"
+				SELECT  
+                    e.IdEmployee,
+                    e.FName,
+                    e.LName,
+                    e.JobTitle
+				FROM Employee e
+				WHERE e.IdEmployee =
+				" + IdEmployee;
 
             const string connectionString =
                 "Data Source =(LocalDB)\\MSSQLLocalDB; AttachDbFilename=\"C:\\Users\\shu\\AppData\\Local\\Microsoft\\Microsoft SQL Server Local DB\\Instances\\MSSQLLocalDB\\Zoolandia.mdf\"; Integrated Security = True";
@@ -43,11 +41,9 @@ namespace SimpleServer
                         // Read advances to the next row.
                         while (reader.Read())
                         {
-                            response += "<div class=\"animal animal-id-" + reader[0] + "\">";
-                            response += "<h2>" + reader[1] + "</h2>";
-                            response += "<div>" + reader[5] + "</div>";
-                            response += "<div><p>commonly known as the <a href='" + reader[6] + "'>" + reader[4] + "</a></p><div>";
-                            response += "<div>Lives in the " + reader[2] + " (" + reader[3] + " type) habitat</div>";
+                            response += "<div class=\"habitat habitat-id-" + reader[0] + "\">";
+                            response += "<h2>" + reader[1] + " " + reader[2] + "</h2>";
+                            response += "<div>" + reader[3] + "</div>";
                             response += "</div>";
                         }
                         Console.WriteLine(response);
@@ -56,25 +52,20 @@ namespace SimpleServer
                 connection.Close();
                 return response;
             }
-		}
+        }
 
 
-		public string getAllAnimals() {
-			string response = "";
+        public string getAllEmployees()
+        {
+            string response = "";
 
-			const string query = @"
-				SELECT 
-				  a.IdAnimal,
-				  a.Name, 
-				  h.Name HabitatName,
-				  ht.Name HabitatType,
-				  s.CommonName,
-				  s.ScientificName,
-                  s.Wiki
-				FROM Animal a
-				INNER JOIN Species s ON a.IdSpecies = s.IdSpecies
-				INNER JOIN Habitat h ON h.IdHabitat = a.IdHabitat
-				INNER JOIN HabitatType ht on ht.IdType = h.IdType
+            const string query = @"
+				SELECT  
+                  e.IdEmployee,
+                  e.FName,
+                  e.LName,
+                  e.JobTitle
+				FROM Employee e
 				";
 
             const string connectionString =
@@ -91,11 +82,9 @@ namespace SimpleServer
                         // Read advances to the next row.
                         while (reader.Read())
                         {
-                            response += "<div class=\"animal animal-id-" + reader[0] + "\">";
-                            response += "<h2>" + reader[1] + "</h2>";
-                            response += "<div><a href='/animals/" + reader[0] + "'>" + reader[5] + "</a></div>";
-                            response += "<div><p>commonly known as the <a href='" + reader[6] + "'>" + reader[4] + "</a></p><div>";
-                            response += "<div>Lives in the " + reader[2] + " (" + reader[3] + " type) habitat</div>";
+                            response += "<div class=\"employee employee-id-" + reader[0] + "\">";
+                            response += "<h2>" + reader[1] + " " + reader[2] + "</h2>";
+                            response += "<div>" + reader[3] + "</div>";
                             response += "</div>";
                         }
                         Console.WriteLine(response);
@@ -104,7 +93,6 @@ namespace SimpleServer
                 connection.Close();
                 return response;
             }
-		}
-	}
+        }
+    }
 }
-

@@ -42,7 +42,6 @@ namespace SimpleServer
 
 		public override void handleGETRequest (HttpProcessor p)
 		{
-			string heading;
 			string message = "";
 
 			p.writeSuccess();
@@ -71,9 +70,35 @@ namespace SimpleServer
 
 				break;
 			case "habitats":
+                Console.WriteLine("Habitat route");
+                if (urlParams.Length > 2)
+                {
+                    Console.WriteLine("Getting a single habitat");
+                    HabitatHandler habitats = new HabitatHandler();
+                    message = habitats.getHabitat(urlParams[2]);
+                }
+                else
+                {
+                        Console.WriteLine("Getting all habitats");
+                        HabitatHandler habitats = new HabitatHandler();
+                        message = habitats.getAllHabitats();
+                }
 				break;
 			case "employees":
-				break;
+                Console.WriteLine("Employee route");
+                if (urlParams.Length > 2)
+                {
+                    Console.WriteLine("Getting a single employee");
+                    EmployeeHandler employees = new EmployeeHandler();
+                    message = employees.getEmployee(urlParams[2]);
+                }
+                else
+                {
+                    Console.WriteLine("Getting all employees");
+                    EmployeeHandler employees = new EmployeeHandler();
+                    message = employees.getAllEmployees();
+                }
+                break;
 			}
 				
 			p.outputStream.WriteLine(message);
